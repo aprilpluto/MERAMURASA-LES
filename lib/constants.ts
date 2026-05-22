@@ -9,7 +9,7 @@ export const SITE = {
   emailUrl: "mailto:ardikamal1213@gmail.com",
   pricePerSession: 150_000,
   maxUploadBytes: 5 * 1024 * 1024,
-  allowedExtensions: ["pdf", "docx", "txt"] as const,
+  allowedExtensions: ["pdf", "docx", "txt", "jpg", "jpeg", "png", "webp"] as const,
 } as const;
 
 export const NAV_LINKS = [

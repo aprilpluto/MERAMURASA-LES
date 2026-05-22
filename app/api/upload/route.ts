@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SITE } from "@/lib/constants";
+import { formatUploadWhatsApp, notifyWhatsApp } from "@/lib/notify";
 
 export const runtime = "nodejs";
 
 const MAX_BYTES = SITE.maxUploadBytes;
-const ALLOWED = new Set(["pdf", "docx", "txt"]);
+const ALLOWED = new Set<string>(SITE.allowedExtensions);
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,6 +34,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const timestamp = new Date().toLocaleString("id-ID");
+    void notifyWhatsApp(formatUploadWhatsApp(file.name, timestamp));
+
     const gasUrl = process.env.GAS_UPLOAD_URL || process.env.GAS_REGISTER_URL;
 
     if (!gasUrl) {
@@ -40,7 +44,7 @@ export async function POST(request: NextRequest) {
         ok: true,
         demo: true,
         message:
-          "Mode demo: set GAS_UPLOAD_URL di Vercel untuk menyimpan ke Google Drive.",
+          "File diterima. Untuk email + Drive, set GAS_UPLOAD_URL. WhatsApp aktif jika CALLMEBOT_APIKEY sudah diisi.",
       });
     }
 
@@ -57,7 +61,7 @@ export async function POST(request: NextRequest) {
         fileName: file.name,
         mimeType,
         data: base64,
-        timestamp: new Date().toLocaleString("id-ID"),
+        timestamp,
       }),
       cache: "no-store",
     });

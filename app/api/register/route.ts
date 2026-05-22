@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { formatRegisterWhatsApp, notifyWhatsApp } from "@/lib/notify";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,6 +14,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const payload = {
+      nama,
+      email,
+      pertemuan,
+      jadwal,
+      sosmed: sosmed || "",
+      wa,
+      tujuan,
+      timestamp: timestamp || new Date().toLocaleString("id-ID"),
+    };
+
+    void notifyWhatsApp(formatRegisterWhatsApp(payload));
+
     const gasUrl = process.env.GAS_REGISTER_URL;
 
     if (!gasUrl) {
@@ -20,24 +34,14 @@ export async function POST(request: NextRequest) {
         ok: true,
         demo: true,
         message:
-          "Mode demo: set GAS_REGISTER_URL di Vercel untuk menyimpan ke Google Spreadsheet.",
+          "Data dicatat. Untuk email + spreadsheet penuh, set GAS_REGISTER_URL. WhatsApp aktif jika CALLMEBOT_APIKEY sudah diisi.",
       });
     }
 
     const gasRes = await fetch(gasUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "register",
-        nama,
-        email,
-        pertemuan,
-        jadwal,
-        sosmed: sosmed || "",
-        wa,
-        tujuan,
-        timestamp: timestamp || new Date().toLocaleString("id-ID"),
-      }),
+      body: JSON.stringify({ action: "register", ...payload }),
       cache: "no-store",
     });
 

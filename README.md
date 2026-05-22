@@ -13,8 +13,8 @@ Platform informasi dan pendaftaran **les cipta puisi daring** — nuansa sastra 
 
 - Hero interaktif dengan animasi bintang
 - Tentang, Mentor, Program Les + FAQ accordion
-- Formulir pendaftaran → Google Spreadsheet
-- Upload karya (PDF/DOCX/TXT, max 5 MB) → Google Drive
+- Formulir pendaftaran → Google Spreadsheet + **email & WhatsApp otomatis**
+- Upload karya (PDF/DOCX/TXT/JPG/PNG, max 5 MB) → Gmail (lampiran) + Drive + WhatsApp
 - Kontak WhatsApp & Email + floating WA button
 - SEO metadata & Open Graph
 - Slot aset: `public/assets/logo.png`, `public/assets/mentor.jpg`
@@ -45,10 +45,11 @@ Buka [http://localhost:3000](http://localhost:3000).
    |------|--------|
    | `GAS_REGISTER_URL` | URL Web App Apps Script |
    | `GAS_UPLOAD_URL` | (opsional, bisa sama) |
+   | `CALLMEBOT_APIKEY` | API key CallMeBot (notifikasi WA otomatis) |
 
 5. Klik **Deploy**.
 
-Tanpa env variable, formulir & upload tetap berjalan dalam **mode demo** (respons sukses + arahkan ke WhatsApp/Email).
+Tanpa `GAS_*`, formulir & upload tetap sukses; **WhatsApp** aktif jika `CALLMEBOT_APIKEY` diisi. **Email** membutuhkan Apps Script (lihat bawah).
 
 ---
 
@@ -60,7 +61,7 @@ Tanpa env variable, formulir & upload tetap berjalan dalam **mode demo** (respon
 2. Buat sheet bernama `Pendaftaran` (atau gunakan sheet aktif).
 3. **Extensions → Apps Script**
 4. Salin isi file `google-apps-script/Code.gs` ke editor.
-5. Set `DRIVE_FOLDER_ID` untuk upload (langkah 2).
+5. Set `CONFIG.DRIVE_FOLDER_ID` dan `CONFIG.CALLMEBOT_APIKEY` di `Code.gs` (langkah 2 & 3).
 
 ### 2. Folder Google Drive (Upload Karya)
 
@@ -80,6 +81,16 @@ Tanpa env variable, formulir & upload tetap berjalan dalam **mode demo** (respon
 ### 4. Izin pertama kali
 
 Saat pertama dijalankan, Apps Script meminta otorisasi Gmail (notifikasi) dan Drive (upload).
+
+### 5. Notifikasi WhatsApp otomatis (CallMeBot)
+
+1. Buka [CallMeBot — API WhatsApp gratis](https://www.callmebot.com/blog/free-api-whatsapp-messages/).
+2. Kirim pesan aktivasi ke bot CallMeBot dari nomor **+62 838-7858-1733**.
+3. Salin **API key** yang diberikan.
+4. Paste ke `CONFIG.CALLMEBOT_APIKEY` di `google-apps-script/Code.gs` **dan** ke `CALLMEBOT_APIKEY` di Vercel / `.env.local`.
+5. Deploy ulang Web App (versi baru) setelah mengubah Apps Script.
+
+Setiap pendaftaran atau upload akan mengirim ringkasan ke WhatsApp Anda; file karya juga dilampirkan di **ardikamal1213@gmail.com**.
 
 ---
 

@@ -15,8 +15,8 @@ export default function Upload({ onToast }: Props) {
 
   const validateFile = (file: File): string | null => {
     const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
-    if (!SITE.allowedExtensions.includes(ext as "pdf" | "docx" | "txt")) {
-      return "Format file tidak didukung. Gunakan PDF, DOCX, atau TXT.";
+    if (!SITE.allowedExtensions.includes(ext as (typeof SITE.allowedExtensions)[number])) {
+      return "Format file tidak didukung. Gunakan PDF, DOCX, TXT, JPG, atau PNG.";
     }
     if (file.size > SITE.maxUploadBytes) {
       return "Ukuran file melebihi 5 MB. Harap kompres terlebih dahulu.";
@@ -112,7 +112,7 @@ export default function Upload({ onToast }: Props) {
           </p>
           <ul className="mt-8 space-y-2 text-sm text-text-dim">
             {[
-              "Format yang diterima: PDF, DOCX, TXT",
+              "Format yang diterima: PDF, DOCX, TXT, JPG, PNG",
               "Ukuran maksimum: 5 MB",
               "File akan diterima langsung oleh mentor",
             ].map((item) => (
@@ -138,7 +138,7 @@ export default function Upload({ onToast }: Props) {
             <input
               ref={inputRef}
               type="file"
-              accept=".pdf,.docx,.txt"
+              accept=".pdf,.docx,.txt,.jpg,.jpeg,.png,.webp"
               className="hidden"
               onChange={(e) => {
                 const file = e.target.files?.[0];
@@ -152,7 +152,7 @@ export default function Upload({ onToast }: Props) {
             <p className="text-sm text-text-dim">
               Klik atau seret file ke area ini
               <br />
-              PDF · DOCX · TXT · Maks 5 MB
+              PDF · DOCX · TXT · JPG · PNG · Maks 5 MB
             </p>
             <button
               type="button"
