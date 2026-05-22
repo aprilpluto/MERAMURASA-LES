@@ -1,3 +1,9 @@
+const WA_PHONE = "6283878581733";
+
+function waLink(text: string) {
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(text)}`;
+}
+
 export const SITE = {
   name: "Meramu Rasa",
   tagline: "Les Cipta Puisi Daring",
@@ -5,18 +11,22 @@ export const SITE = {
   email: "ardikamal1213@gmail.com",
   whatsapp: "+62 838-7858-1733",
   whatsappRaw: "+6283878581733",
-  whatsappUrl: "https://wa.me/6283878581733",
+  whatsappUrl: `https://wa.me/${WA_PHONE}`,
+  whatsappRegisterUrl: waLink(
+    "Halo Meramu Rasa, saya ingin mendaftar les cipta puisi.\n\nNama:\nJumlah pertemuan:\nJadwal yang diinginkan:\nTujuan mengikuti les:"
+  ),
+  whatsappKaryaUrl: waLink(
+    "Halo Meramu Rasa, saya ingin mengirim karya puisi/tulisan saya untuk dibaca dan diberi umpan balik."
+  ),
   emailUrl: "mailto:ardikamal1213@gmail.com",
   pricePerSession: 150_000,
-  maxUploadBytes: 5 * 1024 * 1024,
-  allowedExtensions: ["pdf", "docx", "txt", "jpg", "jpeg", "png", "webp"] as const,
 } as const;
 
 export const NAV_LINKS = [
   { href: "#tentang", label: "Tentang" },
   { href: "#mentor", label: "Mentor" },
   { href: "#program", label: "Program" },
-  { href: "#upload", label: "Karya" },
+  { href: "#daftar", label: "Daftar" },
   { href: "#kontak", label: "Kontak" },
 ] as const;
 

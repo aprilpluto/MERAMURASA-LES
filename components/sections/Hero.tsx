@@ -35,9 +35,6 @@ export default function Hero() {
             <Link href="#daftar" className="btn-primary">
               Daftar Les
             </Link>
-            <Link href="#upload" className="btn-outline">
-              Kirim Tulisan
-            </Link>
             <Link href="#kontak" className="btn-outline">
               Hubungi Kami
             </Link>

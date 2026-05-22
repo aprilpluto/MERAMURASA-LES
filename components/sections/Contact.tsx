@@ -22,6 +22,10 @@ export default function Contact({ onToast }: Props) {
             Hubungi <em>Kami</em>
           </h2>
           <div className="divider-line mx-auto" />
+          <p className="mx-auto mt-6 max-w-xl font-serif text-lg font-light leading-relaxed text-text-dim">
+            Pendaftaran les, pengiriman karya, dan pertanyaan program — semuanya
+            melalui WhatsApp resmi kami.
+          </p>
         </Reveal>
 
         <Reveal>

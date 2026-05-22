@@ -54,7 +54,12 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <Link href="#daftar" className="btn-outline hidden text-[0.68rem] md:inline-block">
+        <Link
+          href={SITE.whatsappRegisterUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-outline hidden text-[0.68rem] md:inline-block"
+        >
           Daftar Les
         </Link>
 
@@ -94,7 +99,9 @@ export default function Navbar() {
           </Link>
         ))}
         <Link
-          href="#daftar"
+          href={SITE.whatsappRegisterUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="btn-primary"
           onClick={() => setMobileOpen(false)}
         >

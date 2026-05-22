@@ -5,7 +5,7 @@ export const FAQS = [
   },
   {
     q: "Bagaimana sistem pembayaran dan konfirmasi pendaftaran?",
-    a: "Setelah mengisi formulir pendaftaran, Anda akan dihubungi via WhatsApp untuk konfirmasi jadwal dan instruksi pembayaran. Les akan dimulai satu hari setelah bukti transfer diterima dan dikonfirmasi.",
+    a: "Hubungi kami via WhatsApp untuk mendaftar. Kami akan mengonfirmasi jadwal dan instruksi pembayaran di chat. Les dimulai satu hari setelah bukti transfer diterima dan dikonfirmasi.",
   },
   {
     q: "Apakah materi les dapat diakses kembali setelah sesi selesai?",

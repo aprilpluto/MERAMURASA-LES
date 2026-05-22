@@ -33,12 +33,6 @@ export default function Footer() {
               {l.label}
             </Link>
           ))}
-          <Link
-            href="#daftar"
-            className="text-[0.65rem] uppercase tracking-[0.2em] text-text-muted transition hover:text-gold-light"
-          >
-            Pendaftaran
-          </Link>
         </nav>
         <p className="mt-10 text-xs text-text-muted">
           © {new Date().getFullYear()} {SITE.name} · Bimbingan Cipta Puisi Daring ·{" "}
