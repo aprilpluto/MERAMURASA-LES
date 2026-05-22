@@ -2,13 +2,13 @@
  * Meramu Rasa — Google Apps Script Backend
  *
  * Deploy sebagai Web App (Anyone) lalu set URL di Vercel:
- * GAS_REGISTER_URL = https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/1
- * GAS_UPLOAD_URL   = https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/1
+ * GAS_REGISTER_URL = https://script.google.com/macros/s/AKfycbzVTG4a1fE5ZRAi8_oWAExuf4UY2R4jzctsiNmupH7myC2yJV1TJZZv1JN7498CNOq3/exec
+ * GAS_UPLOAD_URL   = https://script.google.com/macros/s/AKfycbzVTG4a1fE5ZRAi8_oWAExuf4UY2R4jzctsiNmupH7myC2yJV1TJZZv1JN7498CNOq3/exec
  */
 
 const CONFIG = {
   NOTIFY_EMAIL: "ardikamal1213@gmail.com",
-  DRIVE_FOLDER_ID: "https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/1",
+  DRIVE_FOLDER_ID: "https://script.google.com/macros/s/AKfycbzVTG4a1fE5ZRAi8_oWAExuf4UY2R4jzctsiNmupH7myC2yJV1TJZZv1JN7498CNOq3/exec",
 };
 
 function doPost(e) {
