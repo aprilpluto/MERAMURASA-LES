@@ -2,13 +2,13 @@
  * Meramu Rasa — Google Apps Script Backend
  *
  * Deploy sebagai Web App (Anyone) lalu set URL di Vercel:
- * GAS_REGISTER_URL = https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/2
- * GAS_UPLOAD_URL   = https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/3
+ * GAS_REGISTER_URL = https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/1
+ * GAS_UPLOAD_URL   = https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/1
  */
 
 const CONFIG = {
   NOTIFY_EMAIL: "ardikamal1213@gmail.com",
-  DRIVE_FOLDER_ID: "https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/3",
+  DRIVE_FOLDER_ID: "https://script.google.com/macros/library/d/1QjAxj16vJ-a2AuaugsDBf7wlkvv5OEoaRMfY52CUiK7O-DkkDUElEFHJ/1",
 };
 
 function doPost(e) {
