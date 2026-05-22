@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink font-sans text-text-main antialiased;
+  }
+
+  ::selection {
+    @apply bg-azure/40 text-cream;
+  }
+}
+
+@layer components {
+  .section-inner {
+    @apply mx-auto max-w-[1100px] px-6 py-24 md:px-8;
+  }
+
+  .section-label {
+    @apply mb-4 text-[0.65rem] uppercase tracking-[0.35em] text-gold;
+  }
+
+  .section-title {
+    @apply font-serif text-[clamp(2.2rem,5vw,3.5rem)] font-light leading-tight text-cream;
+  }
+
+  .section-title em {
+    @apply italic text-gold-light;
+  }
+
+  .divider-line {
+    @apply my-6 h-px w-12 bg-gold;
+  }
+
+  .btn-primary {
+    @apply inline-block border border-transparent bg-gold px-8 py-3 font-sans text-[0.72rem] uppercase tracking-[0.2em] text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-light hover:shadow-[0_8px_30px_rgba(201,168,76,0.35)];
+  }
+
+  .btn-outline {
+    @apply inline-block border border-white/25 bg-transparent px-8 py-3 font-sans text-[0.72rem] uppercase tracking-[0.2em] text-text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-white/60;
+  }
+
+  .glass-card {
+    @apply border border-glow/20 bg-card-glass backdrop-blur-md;
+  }
+
+  .form-input {
+    @apply w-full border border-glow/25 bg-deep/60 px-4 py-3 font-sans text-sm text-text-main outline-none transition-colors placeholder:text-text-muted focus:border-glow/60;
+  }
+}
