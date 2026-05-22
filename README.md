@@ -21,13 +21,19 @@ Isi `GAS_WEB_APP_URL` di `.env.local` (lihat setup di bawah).
 ## Setup Google Apps Script
 
 1. Buat spreadsheet **Pendaftaran Meramu Rasa**, sheet `Pendaftaran`.
-2. **Extensions → Apps Script** → salin `google-apps-script/Code.gs`.
-3. Isi `CONFIG`:
-   - `DRIVE_FOLDER_ID` — ID folder Google Drive untuk karya
-   - `CALLMEBOT_APIKEY` — dari [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/) (aktivasi dari +62 838-7858-1733)
+2. **Extensions → Apps Script** → salin `google-apps-script/Code.gs` (sudah berisi `CONFIG` di bawah).
+3. Isi hanya `CALLMEBOT_APIKEY` di `CONFIG` — dari [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/) (aktivasi dari **+62 838-7858-1733**).
 4. **Deploy → Web app** (Execute as: Me, Anyone) → salin URL ke `GAS_WEB_APP_URL`.
 
-Notifikasi otomatis ke **ardikamal1213@gmail.com** dan WhatsApp **+62 838-7858-1733**.
+**Sudah dikonfigurasi di `Code.gs`:**
+
+| `CONFIG` | Nilai |
+|----------|--------|
+| `DRIVE_FOLDER_ID` | `143FV-G3XZGgJvqyRNo19u7-Ss5TBvRt5` — [TULISAN PERAMU RASA](https://drive.google.com/drive/folders/143FV-G3XZGgJvqyRNo19u7-Ss5TBvRt5?usp=sharing) |
+| `NOTIFY_WHATSAPP` | `6283878581733` (+62 838-7858-1733) |
+| `NOTIFY_EMAIL` | `ardikamal1213@gmail.com` |
+
+Notifikasi otomatis ke email dan WhatsApp di atas setelah `CALLMEBOT_APIKEY` diisi dan Web App dideploy.
 
 ## Aset
 

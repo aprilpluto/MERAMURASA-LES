@@ -5,9 +5,9 @@
 
 const CONFIG = {
   NOTIFY_EMAIL: "ardikamal1213@gmail.com",
-  NOTIFY_WHATSAPP: "6283878581733",
-  CALLMEBOT_APIKEY: "",
-  DRIVE_FOLDER_ID: "",
+  NOTIFY_WHATSAPP: "6283878581733", // +62 838-7858-1733
+  CALLMEBOT_APIKEY: "", // isi setelah aktivasi CallMeBot dari nomor di atas
+  DRIVE_FOLDER_ID: "143FV-G3XZGgJvqyRNo19u7-Ss5TBvRt5", // TULISAN PERAMU RASA
 };
 
 function doPost(e) {
