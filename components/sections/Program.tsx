@@ -54,8 +54,13 @@ export default function Program() {
                 Durasi 1–2 jam · Materi termasuk · Akses Google Classroom
               </p>
             </div>
-            <Link href="#daftar" className="btn-primary">
-              Daftar Sekarang
+            <Link
+              href={SITE.whatsappRegisterUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              Daftar via WhatsApp
             </Link>
           </div>
         </Reveal>

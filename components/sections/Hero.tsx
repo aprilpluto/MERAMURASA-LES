@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import { SITE } from "@/lib/constants";
 
 export default function Hero() {
   return (
@@ -32,8 +33,13 @@ export default function Hero() {
         </Reveal>
         <Reveal delay="0.4s">
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link href="#daftar" className="btn-primary">
-              Daftar Les
+            <Link
+              href={SITE.whatsappRegisterUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              Daftar via WhatsApp
             </Link>
             <Link href="#kontak" className="btn-outline">
               Hubungi Kami

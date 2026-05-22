@@ -9,6 +9,8 @@ npm install
 npm run dev
 ```
 
+Buka **http://localhost:3000** (bukan `meramu-rasa.html` di browser — file HTML itu versi lama).
+
 ## Deploy Vercel
 
 Tidak ada variabel lingkungan wajib. Nomor WhatsApp dikonfigurasi di `lib/constants.ts`.

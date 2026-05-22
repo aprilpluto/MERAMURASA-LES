@@ -6,7 +6,6 @@ import Hero from "@/components/sections/Hero";
 import Mentor from "@/components/sections/Mentor";
 import Program from "@/components/sections/Program";
 import Testimonials from "@/components/sections/Testimonials";
-import WhatsAppJoin from "@/components/sections/WhatsAppJoin";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -29,7 +28,6 @@ export default function Home() {
         <About />
         <Mentor onToast={show} />
         <Program />
-        <WhatsAppJoin />
         <Testimonials />
         <Contact onToast={show} />
       </main>

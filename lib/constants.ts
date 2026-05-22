@@ -26,7 +26,6 @@ export const NAV_LINKS = [
   { href: "#tentang", label: "Tentang" },
   { href: "#mentor", label: "Mentor" },
   { href: "#program", label: "Program" },
-  { href: "#daftar", label: "Daftar" },
   { href: "#kontak", label: "Kontak" },
 ] as const;
 
