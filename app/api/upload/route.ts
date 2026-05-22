@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SITE } from "@/lib/constants";
-import { formatUploadWhatsApp, notifyWhatsApp } from "@/lib/notify";
+import { postToGas } from "@/lib/gas";
 
 export const runtime = "nodejs";
 
@@ -34,54 +34,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const timestamp = new Date().toLocaleString("id-ID");
-    void notifyWhatsApp(formatUploadWhatsApp(file.name, timestamp));
-
-    const gasUrl = process.env.GAS_UPLOAD_URL || process.env.GAS_REGISTER_URL;
-
-    if (!gasUrl) {
-      return NextResponse.json({
-        ok: true,
-        demo: true,
-        message:
-          "File diterima. Untuk email + Drive, set GAS_UPLOAD_URL. WhatsApp aktif jika CALLMEBOT_APIKEY sudah diisi.",
-      });
-    }
-
     const buffer = Buffer.from(await file.arrayBuffer());
-    const base64 = buffer.toString("base64");
-    const mimeType =
-      (formData.get("mimeType") as string) || file.type || "application/octet-stream";
-
-    const gasRes = await fetch(gasUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "upload",
-        fileName: file.name,
-        mimeType,
-        data: base64,
-        timestamp,
-      }),
-      cache: "no-store",
+    const result = await postToGas({
+      action: "upload",
+      fileName: file.name,
+      mimeType: file.type || "application/octet-stream",
+      data: buffer.toString("base64"),
+      timestamp: new Date().toLocaleString("id-ID"),
     });
 
-    const text = await gasRes.text();
-    let parsed: { status?: string; error?: string } = {};
-    try {
-      parsed = JSON.parse(text);
-    } catch {
-      parsed = { status: gasRes.ok ? "OK" : "ERROR" };
-    }
-
-    if (!gasRes.ok || parsed.status === "ERROR") {
+    if (!result.ok) {
       return NextResponse.json(
-        { ok: false, error: parsed.error || "Gagal mengunggah ke Drive" },
-        { status: 502 }
+        { ok: false, error: result.error },
+        { status: result.error.includes("dikonfigurasi") ? 503 : 502 }
       );
     }
 
-    return NextResponse.json({ ok: true, demo: false });
+    return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json(
       { ok: false, error: "Terjadi kesalahan server" },

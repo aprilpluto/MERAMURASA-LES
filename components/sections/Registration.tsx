@@ -39,9 +39,7 @@ export default function Registration() {
       if (data.ok) {
         setState("success");
         setMessage(
-          data.demo
-            ? `✦ Pendaftaran tercatat (mode demo). Untuk produksi penuh, hubungi kami via WhatsApp atau Email. Salam Meramu Rasa.`
-            : "✦ Pendaftaran Anda berhasil dikirim! Kami akan menghubungi Anda dalam 1×24 jam. Salam Meramu Rasa."
+          "✦ Pendaftaran Anda berhasil dikirim! Kami akan menghubungi Anda dalam 1×24 jam. Salam Meramu Rasa."
         );
         form.reset();
       } else {

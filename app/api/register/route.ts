@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { formatRegisterWhatsApp, notifyWhatsApp } from "@/lib/notify";
+import { postToGas } from "@/lib/gas";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,7 +14,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const payload = {
+    const result = await postToGas({
+      action: "register",
       nama,
       email,
       pertemuan,
@@ -23,44 +24,16 @@ export async function POST(request: NextRequest) {
       wa,
       tujuan,
       timestamp: timestamp || new Date().toLocaleString("id-ID"),
-    };
-
-    void notifyWhatsApp(formatRegisterWhatsApp(payload));
-
-    const gasUrl = process.env.GAS_REGISTER_URL;
-
-    if (!gasUrl) {
-      return NextResponse.json({
-        ok: true,
-        demo: true,
-        message:
-          "Data dicatat. Untuk email + spreadsheet penuh, set GAS_REGISTER_URL. WhatsApp aktif jika CALLMEBOT_APIKEY sudah diisi.",
-      });
-    }
-
-    const gasRes = await fetch(gasUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "register", ...payload }),
-      cache: "no-store",
     });
 
-    const text = await gasRes.text();
-    let parsed: { status?: string; error?: string } = {};
-    try {
-      parsed = JSON.parse(text);
-    } catch {
-      parsed = { status: gasRes.ok ? "OK" : "ERROR" };
-    }
-
-    if (!gasRes.ok || parsed.status === "ERROR") {
+    if (!result.ok) {
       return NextResponse.json(
-        { ok: false, error: parsed.error || "Gagal menyimpan ke spreadsheet" },
-        { status: 502 }
+        { ok: false, error: result.error },
+        { status: result.error.includes("dikonfigurasi") ? 503 : 502 }
       );
     }
 
-    return NextResponse.json({ ok: true, demo: false });
+    return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json(
       { ok: false, error: "Terjadi kesalahan server" },

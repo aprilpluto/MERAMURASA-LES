@@ -1,32 +1,19 @@
 /**
- * Meramu Rasa — Google Apps Script Backend
- *
- * Deploy sebagai Web App (Anyone) lalu set URL di Vercel:
- * GAS_REGISTER_URL = https://script.google.com/macros/s/.../exec
- * GAS_UPLOAD_URL   = (bisa URL yang sama)
- *
- * Notifikasi otomatis:
- * - Email → ardikamal1213@gmail.com (MailApp)
- * - WhatsApp → +62 838-7858-1733 (CallMeBot, isi CALLMEBOT_APIKEY)
+ * Meramu Rasa — Google Apps Script
+ * Deploy Web App (Anyone) → set GAS_WEB_APP_URL di Vercel / .env.local
  */
 
 const CONFIG = {
   NOTIFY_EMAIL: "ardikamal1213@gmail.com",
   NOTIFY_WHATSAPP: "6283878581733",
-  /** Daftar di https://www.callmebot.com/blog/free-api-whatsapp-messages/ lalu paste API key */
   CALLMEBOT_APIKEY: "",
-  /** ID folder Drive dari URL: drive.google.com/drive/folders/XXXXXXXX */
-  DRIVE_FOLDER_ID: "YOUR_GOOGLE_DRIVE_FOLDER_ID",
+  DRIVE_FOLDER_ID: "",
 };
 
 function doPost(e) {
   try {
     const payload = JSON.parse(e.postData.contents);
-    const action = payload.action || "register";
-
-    if (action === "upload") {
-      return handleUpload(payload);
-    }
+    if (payload.action === "upload") return handleUpload(payload);
     return handleRegister(payload);
   } catch (err) {
     return jsonResponse({ status: "ERROR", error: String(err) });
@@ -34,33 +21,29 @@ function doPost(e) {
 }
 
 function doGet() {
-  return jsonResponse({ status: "OK", message: "Meramu Rasa API aktif" });
+  return jsonResponse({ status: "OK" });
 }
 
-function sendWhatsAppNotification(text) {
-  const key = (CONFIG.CALLMEBOT_APIKEY || "").trim();
+function sendWhatsApp(text) {
+  var key = (CONFIG.CALLMEBOT_APIKEY || "").trim();
   if (!key) return;
-
-  const phone = String(CONFIG.NOTIFY_WHATSAPP || "").replace(/\D/g, "");
-  if (!phone) return;
-
-  const url =
+  var phone = String(CONFIG.NOTIFY_WHATSAPP).replace(/\D/g, "");
+  var url =
     "https://api.callmebot.com/whatsapp.php?phone=" +
     encodeURIComponent(phone) +
     "&text=" +
     encodeURIComponent(text) +
     "&apikey=" +
     encodeURIComponent(key);
-
   try {
     UrlFetchApp.fetch(url, { muteHttpExceptions: true });
-  } catch (waErr) {
-    Logger.log("WhatsApp gagal: " + waErr);
+  } catch (e) {
+    Logger.log(e);
   }
 }
 
 function handleRegister(data) {
-  const sheet =
+  var sheet =
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Pendaftaran") ||
     SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
@@ -77,8 +60,7 @@ function handleRegister(data) {
     ]);
   }
 
-  const ts = data.timestamp || new Date().toLocaleString("id-ID");
-
+  var ts = data.timestamp || new Date().toLocaleString("id-ID");
   sheet.appendRow([
     ts,
     data.nama || "",
@@ -90,15 +72,15 @@ function handleRegister(data) {
     data.tujuan || "",
   ]);
 
-  const body =
-    "Peserta baru mendaftar les Meramu Rasa!\n\n" +
+  var body =
+    "Pendaftaran baru — Meramu Rasa\n\n" +
     "Nama: " +
     data.nama +
     "\nEmail: " +
     data.email +
-    "\nWhatsApp peserta: " +
+    "\nWA peserta: " +
     data.wa +
-    "\nMedia sosial: " +
+    "\nSosmed: " +
     (data.sosmed || "-") +
     "\nPertemuan: " +
     data.pertemuan +
@@ -115,28 +97,11 @@ function handleRegister(data) {
       subject: "Pendaftaran Baru — Meramu Rasa",
       body: body,
     });
-  } catch (mailErr) {
-    Logger.log("Email gagal: " + mailErr);
+  } catch (e) {
+    Logger.log("Email: " + e);
   }
 
-  sendWhatsAppNotification(
-    "📋 Pendaftaran Baru — Meramu Rasa\n\n" +
-      "Nama: " +
-      data.nama +
-      "\nEmail: " +
-      data.email +
-      "\nWA: " +
-      data.wa +
-      "\nPertemuan: " +
-      data.pertemuan +
-      "\nJadwal: " +
-      data.jadwal +
-      "\nTujuan: " +
-      data.tujuan +
-      "\nWaktu: " +
-      ts
-  );
-
+  sendWhatsApp(body);
   return jsonResponse({ status: "OK" });
 }
 
@@ -145,55 +110,43 @@ function handleUpload(data) {
     return jsonResponse({ status: "ERROR", error: "Data file tidak lengkap" });
   }
 
-  const ts = data.timestamp || new Date().toLocaleString("id-ID");
-  const blob = Utilities.newBlob(
+  var ts = data.timestamp || new Date().toLocaleString("id-ID");
+  var blob = Utilities.newBlob(
     Utilities.base64Decode(data.data),
     data.mimeType || "application/octet-stream",
     data.fileName
   );
 
   var fileUrl = "";
-  const folderId = (CONFIG.DRIVE_FOLDER_ID || "").trim();
-
-  if (folderId && folderId !== "YOUR_GOOGLE_DRIVE_FOLDER_ID") {
+  var folderId = (CONFIG.DRIVE_FOLDER_ID || "").trim();
+  if (folderId) {
     try {
-      const folder = DriveApp.getFolderById(folderId);
-      const file = folder.createFile(blob);
+      var file = DriveApp.getFolderById(folderId).createFile(blob);
       fileUrl = file.getUrl();
-    } catch (driveErr) {
-      Logger.log("Drive gagal: " + driveErr);
+    } catch (e) {
+      Logger.log("Drive: " + e);
     }
   }
 
-  const body =
-    "Karya baru diunggah ke Meramu Rasa!\n\n" +
-    "Nama file: " +
+  var body =
+    "Karya baru — Meramu Rasa\n\nFile: " +
     data.fileName +
     "\nWaktu: " +
     ts +
-    (fileUrl ? "\nLink Drive: " + fileUrl : "\n\n(File dilampirkan di email ini.)");
+    (fileUrl ? "\nDrive: " + fileUrl : "");
 
   try {
     MailApp.sendEmail({
       to: CONFIG.NOTIFY_EMAIL,
-      subject: "Karya Baru — Meramu Rasa (" + data.fileName + ")",
+      subject: "Karya Baru — " + data.fileName,
       body: body,
       attachments: [blob],
     });
-  } catch (mailErr) {
-    Logger.log("Email gagal: " + mailErr);
+  } catch (e) {
+    Logger.log("Email: " + e);
   }
 
-  sendWhatsAppNotification(
-    "📜 Karya Baru — Meramu Rasa\n\n" +
-      "File: " +
-      data.fileName +
-      "\nWaktu: " +
-      ts +
-      (fileUrl ? "\nDrive: " + fileUrl : "") +
-      "\n\n(Lihat lampiran di Gmail Anda.)"
-  );
-
+  sendWhatsApp(body);
   return jsonResponse({ status: "OK", fileUrl: fileUrl });
 }
 

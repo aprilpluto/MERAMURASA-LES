@@ -38,8 +38,6 @@ export default function Upload({ onToast }: Props) {
 
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("fileName", file.name);
-      formData.append("mimeType", file.type || "application/octet-stream");
 
       try {
         const xhr = new XMLHttpRequest();
